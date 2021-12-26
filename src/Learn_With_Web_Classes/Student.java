@@ -1,4 +1,5 @@
 package Learn_With_Web_Classes;
+import databasequery.SqlQuery;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Toolkit;
@@ -17,7 +18,7 @@ public class Student extends javax.swing.JFrame {
     public void showDate()
  {
  java.util.Date d1=new java.util.Date();
- SimpleDateFormat s=new SimpleDateFormat("DD-MM-YYYY");
+ SimpleDateFormat s=new SimpleDateFormat("dd-MM-yyyy");
  doa.setText(s.format(d1));
  }
     
@@ -117,6 +118,10 @@ public class Student extends javax.swing.JFrame {
         initComponents();
         showDate();
         this.setLocation((int)ssize.getWidth()/2-this.getWidth()/2,(int)ssize.getHeight()/2-this.getHeight()/2);
+          if(!new SqlQuery().isTableExist("student_record"))
+        {       
+           new SqlQuery().createTable("student_record","id number primary key,student_name varchar2(20),father_name varchar2(20),date_of_brith varchar2(20),category varchar2(20),class_course varchar2(20),fess varchar2(10),address varchar2(30),date_of_admission varchar2(15),mobile_no varchar2(20),status varchar2(20),refference_name varchar2(20)");
+        }
     }
 
     /**
@@ -557,7 +562,7 @@ if(agree.isSelected()){
        if(id.getText().isEmpty()||fname.getText().isEmpty()||sname.getText().isEmpty()||fess.getText().isEmpty()||doa.getText().isEmpty()||mob.getText().isEmpty()||status.getSelectedIndex()==0)
         JOptionPane.showMessageDialog(null,"Mandatory Fields can't be Empty","Error",JOptionPane.INFORMATION_MESSAGE);
        else{
-       String sql="insert into mydb.student_record(id,student_name,father_name,date_of_brith,category,class_course,fess,address,date_of_admission,mobile_no,status,refference_name)values(?,?,?,?,?,?,?,?,?,?,?,?)";
+       String sql="insert into student_record(id,student_name,father_name,date_of_brith,category,class_course,fess,address,date_of_admission,mobile_no,status,refference_name)values(?,?,?,?,?,?,?,?,?,?,?,?)";
          Connect c=new Connect();
          Connection conn=c.connectTo();
         try
@@ -603,7 +608,7 @@ else{
         Connect c=new Connect();
         Connection conn=c.connectTo();
         Statement st=conn.createStatement();
-        ResultSet rs=st.executeQuery("select * from mydb.student_record");
+        ResultSet rs=st.executeQuery("select * from student_record");
         while(rs.next())
         {
         if(rs.getString("student_name").equalsIgnoreCase(sn.getText()) && rs.getString("father_name").equalsIgnoreCase(fn.getText()))
@@ -660,7 +665,7 @@ else{
         Connect c=new Connect();
         Connection conn=c.connectTo();
         Statement st=conn.createStatement();
-        ResultSet rs=st.executeQuery("select * from mydb.student_record");
+        ResultSet rs=st.executeQuery("select * from student_record");
         while(rs.next())
         {
           if(rs.getString("id").equalsIgnoreCase(id.getText()) && rs.getString("student_name").equalsIgnoreCase(sname.getText())){
@@ -672,7 +677,7 @@ else{
         if(log==1){         
          int i=JOptionPane.showConfirmDialog(null,"Are you Sure Want to delete This Record","Dialog",JOptionPane.YES_NO_OPTION);
          if(i==0){
-         String sql="delete from mydb.student_record where id='"+id.getText()+"'";
+         String sql="delete from student_record where id='"+id.getText()+"'";
          PreparedStatement pst=conn.prepareStatement(sql);
          pst.executeUpdate();
          conn.close();
@@ -706,7 +711,7 @@ else{
         Connect c=new Connect();
         Connection conn=c.connectTo();
         Statement st=conn.createStatement();
-        ResultSet rs=st.executeQuery("select * from mydb.student_record");
+        ResultSet rs=st.executeQuery("select * from student_record");
         while(rs.next())
         {
           if(rs.getString("id").equalsIgnoreCase(id.getText())){
@@ -718,7 +723,7 @@ else{
         if(log==1){         
          int i=JOptionPane.showConfirmDialog(null,"Are you Sure Want to Update This Record","Dialog",JOptionPane.YES_NO_OPTION);
          if(i==0){
-         String sql="update mydb.student_record set student_name=?,father_name=?,date_of_brith=?,category=?,class_course=?,fess=?,address=?,date_of_admission=?,mobile_no=?,status=?,refference_name=? where id=?";
+         String sql="update student_record set student_name=?,father_name=?,date_of_brith=?,category=?,class_course=?,fess=?,address=?,date_of_admission=?,mobile_no=?,status=?,refference_name=? where id=?";
         PreparedStatement pst=conn.prepareStatement(sql);  
         pst.setString(1,sname.getText());
         pst.setString(2,fname.getText());

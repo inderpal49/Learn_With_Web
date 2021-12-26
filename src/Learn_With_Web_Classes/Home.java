@@ -27,7 +27,7 @@ public class Home extends javax.swing.JFrame {
  public void showDate()
  {
  Date d1=new Date();
- SimpleDateFormat s=new SimpleDateFormat("DD-MM-YYYY");
+ SimpleDateFormat s=new SimpleDateFormat("dd-MM-yyyy");
  ldate.setText(s.format(d1));
  }
  public void showTime()
@@ -61,9 +61,9 @@ public class Home extends javax.swing.JFrame {
     try{
         Connect c=new Connect();
         Connection conn=c.connectTo();
-    Statement st=conn.createStatement();
-    ResultSet rs=st.executeQuery("select * from mydb.student_record");
-    Users user;
+        Statement st=conn.createStatement();
+        ResultSet rs=st.executeQuery("select * from student_record");
+        Users user;
     
     while(rs.next())
     {
@@ -128,8 +128,6 @@ public class Home extends javax.swing.JFrame {
         aero = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         ldate = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
         ltime = new javax.swing.JLabel();
         emp = new javax.swing.JButton();
         student = new javax.swing.JButton();
@@ -267,21 +265,17 @@ public class Home extends javax.swing.JFrame {
         jPanel1.setMinimumSize(new java.awt.Dimension(810, 50));
         jPanel1.setLayout(null);
 
-        ldate.setText("date");
+        ldate.setFont(new java.awt.Font("Arial Black", 1, 18)); // NOI18N
+        ldate.setText("Date");
+        ldate.setToolTipText("");
+        ldate.setName(""); // NOI18N
         jPanel1.add(ldate);
-        ldate.setBounds(720, 20, 80, 14);
+        ldate.setBounds(690, 20, 120, 20);
 
-        jLabel4.setText("Time-");
-        jPanel1.add(jLabel4);
-        jLabel4.setBounds(690, 50, 40, 14);
-
-        jLabel3.setText("Date-");
-        jPanel1.add(jLabel3);
-        jLabel3.setBounds(690, 20, 40, 14);
-
+        ltime.setFont(new java.awt.Font("Arial Black", 1, 15)); // NOI18N
         ltime.setText("Time");
         jPanel1.add(ltime);
-        ltime.setBounds(720, 50, 80, 14);
+        ltime.setBounds(690, 50, 120, 20);
 
         emp.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         emp.setText("Employee");
@@ -415,7 +409,8 @@ public class Home extends javax.swing.JFrame {
 
         lts.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         lts.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lts.setText("50");
+        lts.setText("0");
+        lts.setToolTipText("");
         jPanel1.add(lts);
         lts.setBounds(230, 30, 50, 30);
 
@@ -469,7 +464,7 @@ public class Home extends javax.swing.JFrame {
         Connect c=new Connect();
         Connection conn=c.connectTo();
         Statement st=conn.createStatement();
-        ResultSet rs=st.executeQuery("select * from mydb.student_record");
+        ResultSet rs=st.executeQuery("select * from student_record");
         while(rs.next())
         {
         if(rs.getString("student_name").equalsIgnoreCase(sn.getText()))
@@ -606,8 +601,6 @@ public class Home extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
