@@ -206,15 +206,23 @@ public class NewUser extends javax.swing.JFrame {
     }//GEN-LAST:event_resetActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-       if(txtu.getText().isEmpty() || txtp.getText().isEmpty() || list.getSelectedIndex()==0 || txtans.getText().isEmpty()) 
-           DialogBox.okDialogError("Fields Can't be Empty");
-       else
+       boolean isNumber;
+        try{
+        int a=Integer.parseInt(txtp.getText());
+        isNumber=true;
+        }
+       catch(NumberFormatException ex)
        {
-        new SqlQuery().insertTableData("logins",txtu.getText()+","+txtp.getText()+","+txtans.getText());          
-        DialogBox.okDialog("User Created Sucessfully");           
-        reset();
-       
+            isNumber=false;
        }
+        if(txtu.getText().isEmpty() || txtp.getText().isEmpty()|| list.getSelectedIndex()==0 || txtans.getText().isEmpty()) 
+           DialogBox.okDialogError("Fields Can't be Empty");
+        else if(isNumber) {
+            new SqlQuery().insertTableData("logins","'"+txtu.getText()+"'"+","+txtp.getText()+","+"'"+txtans.getText()+"'");
+            System.out.println(txtu.getText()+","+txtp.getText()+","+txtans.getText());
+            DialogBox.okDialog("User Created Sucessfully");
+            reset();
+       } else DialogBox.okDialogError("Password Must be Number");
         
     }//GEN-LAST:event_jButton1ActionPerformed
 

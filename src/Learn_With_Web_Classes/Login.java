@@ -23,10 +23,10 @@ public class Login extends javax.swing.JFrame {
     public Login() {
         initComponents();
         this.setLocation((int)ssize.getWidth()/2-this.getWidth()/2,(int)ssize.getHeight()/2-this.getHeight()/2);
-      /*  if(!new SqlQuery().isTableExist("logins"))
+        if(!new SqlQuery().isTableExist("logins"))
         {       
            new SqlQuery().createTable("logins","email varchar2(30) primary key,password number not null,security_question varchar2(50) not null");
-        }*/
+        }
                 
                 
     }
@@ -159,6 +159,7 @@ fog.setVisible(true);
                }
             }
             resultSet.close();
+            conn.close();
            } catch (SQLException ex) {
             Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
         }
