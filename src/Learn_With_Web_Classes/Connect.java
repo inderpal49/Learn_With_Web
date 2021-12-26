@@ -5,7 +5,7 @@ import java.sql.*;
 import java.io.*;
 public class Connect {
     Connection c;
-  //  Unp u2=new Unp();
+  
     CreateObject obj;
     public void getData()
     {
@@ -23,6 +23,7 @@ public class Connect {
               {
                  DialogBox.okDialogError("Login Crediential File can't Access");
               }
+               
             } 
     catch (IOException ex) 
         {
@@ -41,13 +42,13 @@ public class Connect {
     public Connection connectTo()
     {
         try{
-        Class.forName(obj.getDataBaseClass());
-        
+        Class.forName(obj.getDataBaseClass());        
         c=DriverManager.getConnection(obj.getUrl(),obj.getUserName(),obj.getPassword());
         return c;
         }catch(ClassNotFoundException ex){
-            DialogBox.okDialogError("DataBase Class Library Missing");}
-        catch(SQLException ex){DialogBox.okDialogError("Server Connection Error,Set Server");}
+            DialogBox.okDialogError("DataBase Class Library Missing");
+        }catch(SQLException ex){DialogBox.okDialogError("Server Connection Error,Set Server");
+        }//catch(NullPointerException ex){DialogBox.okDialogError("inderpal");}
         return c;
     }
 }

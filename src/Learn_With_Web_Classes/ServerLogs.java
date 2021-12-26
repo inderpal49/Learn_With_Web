@@ -4,6 +4,8 @@ import java.awt.*;
 import java.awt.event.WindowEvent;
 import java.io.*;
 import javax.swing.JOptionPane;
+import logins.*;
+
 public class ServerLogs extends javax.swing.JFrame {
     private void reset()
     {
@@ -205,12 +207,10 @@ public class ServerLogs extends javax.swing.JFrame {
         if(sc.getText().isEmpty() || su.getText().isEmpty() || un.getText().isEmpty() || pass.getText().isEmpty())
                DialogBox.okDialogError("Fields Can't be Empty");
         else{
-        Unp u1=new Unp();
-        u1.setdata(sc.getText(),su.getText(),un.getText(),pass.getText());
+            CreateObject obj=new CreateObject(sc.getText(),su.getText(),un.getText(),pass.getText());       
         try {
-            ObjectOutputStream out=new ObjectOutputStream(new FileOutputStream("secure_data.dat"));
-            out.writeObject(u1);
-            out.close();            
+            WriteObjectToFile out=new WriteObjectToFile(obj);
+            out.writeObject("secure.dat");                      
             DialogBox.okDialog("Crediential Saved");           
             reset();
         } catch (FileNotFoundException ex) {
@@ -226,26 +226,31 @@ public class ServerLogs extends javax.swing.JFrame {
         {
         sc.enable(false);
         sc.setText("");
+        
         }
         else if(ss.getSelectedIndex()==1)
         {
             sc.enable(false);
             sc.setText("oracle.jdbc.driver.OracleDriver");
+            su.setText("jdbc:oracle:thin:@localhost:1521:XE");
         }
         else if(ss.getSelectedIndex()==2)
         {
             sc.enable(false);
             sc.setText("panding");
+            su.setText("");
         }
         else if(ss.getSelectedIndex()==3)
         {
             sc.enable(false);
             sc.setText("com.mysql.jdbc.Driver");
+            su.setText("");
         }
         else
         {
             sc.setText("");
             sc.enable(true);
+            su.setText("");
         }
     }//GEN-LAST:event_ssActionPerformed
 

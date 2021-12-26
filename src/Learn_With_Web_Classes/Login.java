@@ -23,10 +23,10 @@ public class Login extends javax.swing.JFrame {
     public Login() {
         initComponents();
         this.setLocation((int)ssize.getWidth()/2-this.getWidth()/2,(int)ssize.getHeight()/2-this.getHeight()/2);
-        if(!new SqlQuery().isTableExist("logins"))
+       /* if(!new SqlQuery().isTableExist("logins"))
         {       
            new SqlQuery().createTable("logins","email varchar2(30) primary key,password number not null,security_question varchar2(50) not null");
-        }
+        }*/
                 
                 
     }
@@ -186,18 +186,11 @@ fog.setVisible(true);
     }//GEN-LAST:event_loginActionPerformed
 
     private void serverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_serverActionPerformed
-          if(txtun.getText().equalsIgnoreCase("learn") && txtpass.getText().equalsIgnoreCase("learn"))  
-          {
+        
            closeMe(); 
            ServerLogs sl=new ServerLogs();
-           sl.setVisible(true);
-          }
-          else{
-              DialogBox.okDialogError("Username or password Invalid");
-           
-           txtun.setText("");
-           txtpass.setText("");
-          }
+           sl.setVisible(true);          
+          
     }//GEN-LAST:event_serverActionPerformed
 
     private void exitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitActionPerformed
