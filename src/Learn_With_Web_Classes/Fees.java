@@ -5,6 +5,7 @@
  */
 package Learn_With_Web_Classes;
 
+import databasequery.SqlQuery;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.awt.event.WindowEvent;
@@ -29,7 +30,7 @@ public class Fees extends javax.swing.JFrame {
     }
     private void tussionFeeDetails()
     {
-    String sql="select sum(deposit_amount),sum(fees) from mydb.fess_details where id='"+lid.getText()+"'";
+    String sql="select sum(deposit_amount),sum(fees) from fess_details where id='"+lid.getText()+"'";
     try{    
         Connect c=new Connect();
         Connection conn=c.connectTo();
@@ -49,7 +50,7 @@ public class Fees extends javax.swing.JFrame {
     }
     private void computerFeeDetails()
     {
-    String sql="select sum(deposit_amount) from mydb.fess_details where id='"+lid.getText()+"'";
+    String sql="select sum(deposit_amount) from fess_details where id='"+lid.getText()+"'";
     try{  
         Connect c=new Connect();
        Connection conn=c.connectTo();
@@ -82,7 +83,7 @@ public class Fees extends javax.swing.JFrame {
     public String showDate()
  {
  Date d=new Date();
- SimpleDateFormat s=new SimpleDateFormat("YYYY-MM-DD");
+ SimpleDateFormat s=new SimpleDateFormat("dd-MM-yyyy");
  date.setText(s.format(d));
  return(s.format(d)); 
  }
@@ -97,6 +98,10 @@ public class Fees extends javax.swing.JFrame {
         initComponents();
         date.setText(showDate());
         this.setLocation((int)ssize.getWidth()/2-this.getWidth()/2,(int)ssize.getHeight()/2-this.getHeight()/2);
+        if(!new SqlQuery().isTableExist("fess_details"))
+        {       
+           new SqlQuery().createTable("fess_details","id number primary key,category varchar2(20),fees number,deposit_amount number,date_of_deposit varchar2(20),deposited_by varchar2(20)");
+        }
     }
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -547,7 +552,7 @@ public class Fees extends javax.swing.JFrame {
             Connect c=new Connect();
             Connection conn=c.connectTo();
         Statement st=conn.createStatement();
-        ResultSet rs=st.executeQuery("select * from mydb.student_record");
+        ResultSet rs=st.executeQuery("select * from student_record");
         while(rs.next())
         {
         if(rs.getString("id").equalsIgnoreCase(id.getText()))
@@ -574,7 +579,7 @@ public class Fees extends javax.swing.JFrame {
 
     private void depositActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_depositActionPerformed
      
-           String sql="insert into mydb.fess_details(id,category,fees,deposit_amount,date_of_deposit,deposited_by) values(?,?,?,?,?,?)";
+           String sql="insert into fess_details(id,category,fees,deposit_amount,date_of_deposit,deposited_by) values(?,?,?,?,?,?)";
         try{
         Connect c=new Connect();
         Connection conn=c.connectTo();
