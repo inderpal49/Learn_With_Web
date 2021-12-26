@@ -7,7 +7,7 @@ public class Unp implements Serializable{
     this.cls=cls;
     this.url=url;
     this.user_name=user_name;
-    this.password=password;    
+    this.password=password;  
     }
    public String geturl(){return url;}
    public String getuser_name(){return user_name;}

@@ -2,6 +2,7 @@
 package Learn_With_Web_Classes;
 
 
+import databasequery.SqlQuery;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.awt.event.WindowEvent;
@@ -209,24 +210,11 @@ public class NewUser extends javax.swing.JFrame {
            DialogBox.okDialogError("Fields Can't be Empty");
        else
        {
-        try
-        {
-         String sql="insert into mydb.logins(username,password,question,answer) values(?,?,?,?)";
-           Connect c=new Connect();
-           Connection conn=c.connectTo();
-           PreparedStatement pst=conn.prepareStatement(sql);
-           pst.setString(1,txtu.getText());
-           pst.setString(2,txtp.getText());
-           pst.setString(3,String.valueOf(list.getSelectedItem()));
-           pst.setString(4,txtans.getText());
-           pst.executeUpdate();
-           pst.close();
-           conn.close();
-           DialogBox.okDialog("User Created Sucessfully");           
-           reset();
-        }catch(SQLException ex){DialogBox.okDialogError("SQL Querry Error");}}     
-      
-
+        new SqlQuery().insertTableData("logins",txtu.getText()+","+txtp.getText()+","+txtans.getText());          
+        DialogBox.okDialog("User Created Sucessfully");           
+        reset();
+       
+       }
         
     }//GEN-LAST:event_jButton1ActionPerformed
 

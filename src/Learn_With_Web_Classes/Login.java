@@ -1,10 +1,12 @@
 
 package Learn_With_Web_Classes;
 
+import databasequery.SqlQuery;
 import java.sql.*;
-import java.io.*;
 import java.awt.*;
 import java.awt.event.WindowEvent;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 public class Login extends javax.swing.JFrame {
     public void fun()
@@ -21,7 +23,12 @@ public class Login extends javax.swing.JFrame {
     public Login() {
         initComponents();
         this.setLocation((int)ssize.getWidth()/2-this.getWidth()/2,(int)ssize.getHeight()/2-this.getHeight()/2);
-       
+      /*  if(!new SqlQuery().isTableExist("logins"))
+        {       
+           new SqlQuery().createTable("logins","email varchar2(30) primary key,password number not null,security_question varchar2(50) not null");
+        }*/
+                
+                
     }
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -134,37 +141,45 @@ fog.setVisible(true);
     }//GEN-LAST:event_forgetActionPerformed
 
     private void loginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginActionPerformed
-      Connect c=new Connect();
-      
-      int log=0;
-      try
-      {
-          Connection conn=c.connectTo();
-          Statement st=conn.createStatement();
-          ResultSet rs=st.executeQuery("select username,password from mydb.logins");        
-          while(rs.next())
-          {
-          if(txtun.getText().equalsIgnoreCase(rs.getString("username")) && txtpass.getText().equalsIgnoreCase(rs.getString("password")))       
-          {
-          log=1;
-          break;          
-          }
-          }
-          rs.close();
-          st.close();
-          conn.close();
-      }catch(SQLException ex){DialogBox.okDialogError("SQL QUERY ERROR");}
-      if(log==1)
-      {
-          closeMe();
-          Home h=new Home();
-          h.setVisible(true);
-          h.setUser(txtun.getText());
-       }
-      else
-      {
-        DialogBox.okDialogError("Invalid Username or Password");
-      }
+       int log=0;
+       
+         try 
+         {
+            Connect c=new Connect();           
+            Connection conn=c.connectTo();
+            Statement statement=conn.createStatement();           
+            ResultSet resultSet=new SqlQuery().sqlQuery(conn,statement,"select * from logins");            
+            while(resultSet.next())
+            {
+                
+            if(txtun.getText().equalsIgnoreCase(resultSet.getString("email")) && txtpass.getText().equalsIgnoreCase(resultSet.getString("password")))
+               {
+                  log=1;
+                  break;
+               }
+            }
+            resultSet.close();
+           } catch (SQLException ex) {
+            Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+        }
+         
+         
+         
+         
+            
+            
+           if(log==1)
+            {
+            closeMe();
+            Home h=new Home();
+            h.setVisible(true);
+            h.setUser(txtun.getText());
+            }
+            else
+            {
+            DialogBox.okDialogError("Invalid Username or Password");
+            }
+        
       
 
     }//GEN-LAST:event_loginActionPerformed
